@@ -1,11 +1,11 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :done]
 
   # GET /items
   # GET /items.json
   def index
     @list_id = params[:list_id] || 1
-    @items   = List.find(@list_id).items
+    @items   = List.find(@list_id).items.where(todo_flag: false)
   end
 
   # GET /items/1
@@ -53,13 +53,19 @@ class ItemsController < ApplicationController
   end
 
   # DELETE /items/1
-  # DELETE /items/1.json
+  # DELETE /items/1.jsonL
   def destroy
     @item.destroy
     respond_to do |format|
       format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def done
+    @item.update(todo_flag: true)
+    list_id = @item.list_id
+    redirect_to items_path(list_id: list_id), notice: 'doneeeeeeee!!'
   end
 
   private
