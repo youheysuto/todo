@@ -17,7 +17,6 @@
       <tr>
         <td><%= item.desc %></td>
         <td><%= item.todo_flag %></td>
-        <td><%= item.list %></td>
         <td><%= link_to 'Show', item %></td>
         <td><%= link_to 'Edit', edit_item_path(item) %></td>
         <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -28,4 +27,5 @@
 
 <br>
 
-<%= link_to 'New Item', new_item_path %>
+<%= link_to 'Todoを追加', new_item_path(list_id: @list_id) %>
+<%= link_to 'リストいちらんへ', lists_path %>
