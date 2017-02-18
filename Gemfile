@@ -18,15 +18,19 @@ gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
+gem 'devise'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+gem 'sinatra', '2.0.0.beta2'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'thor', '0.19.1', '!=0.19.2', '!=0.19.3', '!=0.19.4'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -36,7 +40,9 @@ group :development, :test do
 end
 
 group :development do
+
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
+  gem 'mailcatcher'
   gem 'web-console'
   gem 'pry-rails'
   gem 'listen', '~> 3.0.5'
