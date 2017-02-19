@@ -1,11 +1,11 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :done]
+  before_action :set_list, only: [:index,:done]
 
   # GET /items
   # GET /items.json
   def index
-    @list_id = params[:list_id] || 1
-    @items   = List.find(@list_id).items.where(todo_flag: false)
+    @items  = @list.items.where(todo_flag: false)
   end
 
   # GET /items/1
@@ -15,10 +15,10 @@ class ItemsController < ApplicationController
 
   # GET /items/new
   def new
-    @item = Item.new(list_id: params[:list_id])
+    @item = Item.new(list_id: params[:id])
   end
 
-  # GET /items/1/edit
+# GET /items/1/edit
   def edit
   end
 
@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to items_path(list_id: item_params[:list_id]), notice: 'Item was successfully created.' }
+        format.html { redirect_to items_path(@list), notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to items_path(list_id: item_params[]), notice: 'Item was successfully updated.' }
+        format.html { redirect_to items_path(@list), notice: 'Item was successfully updated.' }
         format.json { render :show, status: :ok, location: @item }
       else
         format.html { render :edit }
@@ -64,8 +64,7 @@ class ItemsController < ApplicationController
 
   def done
     @item.update(todo_flag: true)
-    list_id = @item.list_id
-    redirect_to items_path(list_id: list_id), notice: 'doneeeeeeee!!'
+    redirect_to items_path(@list), notice: 'doneeeeeeee!!'
   end
 
   private
@@ -78,4 +77,10 @@ class ItemsController < ApplicationController
     def item_params
       params.require(:item).permit(:desc, :todo_flag, :list_id)
     end
+
+    # Set_list_id
+    def set_list
+      @list = List.find(params[:id])
+    end
+
 end
